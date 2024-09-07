@@ -9,20 +9,23 @@ public class ErrorStructure<T> {
 	public int getStatusCode() {
 		return statusCode;
 	}
-	public void setStatusCode(int statusCode) {
+	public ErrorStructure<T> setStatusCode(int statusCode) {
 		this.statusCode = statusCode;
+		return this;
 	}
 	public String getErrorMessage() {
 		return errorMessage;
 	}
-	public void setErrorMessage(String errorMessage) {
+	public ErrorStructure<T> setErrorMessage(String errorMessage) {
 		this.errorMessage = errorMessage;
+		return this;
 	}
 	public T getData() {
 		return data;
 	}
-	public void setData(T data) {
+	public ErrorStructure<T> setData(T data) {
 		this.data = data;
+		return this;
 	}
 	
 	

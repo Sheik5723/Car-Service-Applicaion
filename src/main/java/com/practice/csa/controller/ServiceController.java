@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,6 +25,7 @@ public class ServiceController {
 	private ServiceService serviceService;
 
 	@PostMapping("/services")
+	@PreAuthorize("hasAuthority('ADMIN')")
 	public ResponseEntity<ResponseStructure<ServiceResponseDto>> addService(@RequestBody ServiceRequestDto request){
 		return serviceService.addService(request);
 	}
@@ -34,11 +36,13 @@ public class ServiceController {
 	}
 	
 	@PutMapping("/services/{serviceId}")
+	@PreAuthorize("hasAuthority('ADMIN')")
 	public ResponseEntity<ResponseStructure<ServiceResponseDto>> updateServiceById(@PathVariable int serviceId , @RequestBody ServiceRequestDto request){
 		return serviceService.updateServiceById(serviceId , request);
 	}
 	
 	@DeleteMapping("/services/{serviceId}")
+	@PreAuthorize("hasAuthority('ADMIN')")
 	public ResponseEntity<ResponseStructure<ServiceResponseDto>> deleteServiceById(@PathVariable int serviceId){
 		return serviceService.deleteServiceById(serviceId);
 	}

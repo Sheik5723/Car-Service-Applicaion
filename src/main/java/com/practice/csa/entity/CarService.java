@@ -1,5 +1,6 @@
 package com.practice.csa.entity;
 
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -39,6 +40,5 @@ public class CarService {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	
 	
 }

@@ -46,71 +46,71 @@ public class ServiceServiceImpl implements ServiceService {
 	public ResponseEntity<ResponseStructure<ServiceResponseDto>> findServiceById(int serviceId) {
 
 		return repository.findById(serviceId)
-			.map(service->ResponseEntity
-					.status(HttpStatus.FOUND)
-					.body(new ResponseStructure<ServiceResponseDto>()
-							.setStatusCode(HttpStatus.FOUND.value())
-							.setMessage("Service Found")
-							.setData(mapper.mapToServiceResponse(service))
-						 )
-				)
-			.orElseThrow(()->new ServiceNotFoundException("Service Not Found"));
+				.map(service->ResponseEntity
+						.status(HttpStatus.FOUND)
+						.body(new ResponseStructure<ServiceResponseDto>()
+								.setStatusCode(HttpStatus.FOUND.value())
+								.setMessage("Service Found")
+								.setData(mapper.mapToServiceResponse(service))
+								)
+						)
+				.orElseThrow(()->new ServiceNotFoundException("Service Not Found"));
 
 	}
 
 	@Override
 	public ResponseEntity<ResponseStructure<ServiceResponseDto>> updateServiceById(int serviceId,ServiceRequestDto request) {
-		
-		
+
+
 		return repository.findById(serviceId)
-			.map(service->{
-				
-				CarService updatedService = mapper.mapToService(request);
-				updatedService.setServiceId(serviceId);
-				
-				return ResponseEntity
-						.status(HttpStatus.OK)
-						.body(new ResponseStructure<ServiceResponseDto>()
-								.setStatusCode(HttpStatus.OK.value())
-								.setMessage("Updated Successfully")
-								.setData(mapper.mapToServiceResponse(repository.save(updatedService)))
-								);
-			})
-			.orElseThrow(()->new ServiceNotFoundException("Service Not Found"));
+				.map(service->{
+
+					CarService updatedService = mapper.mapToService(request);
+					updatedService.setServiceId(serviceId);
+
+					return ResponseEntity
+							.status(HttpStatus.OK)
+							.body(new ResponseStructure<ServiceResponseDto>()
+									.setStatusCode(HttpStatus.OK.value())
+									.setMessage("Updated Successfully")
+									.setData(mapper.mapToServiceResponse(repository.save(updatedService)))
+									);
+				})
+				.orElseThrow(()->new ServiceNotFoundException("Service Not Found"));
 
 	}
 
 	@Override
 	public ResponseEntity<ResponseStructure<ServiceResponseDto>> deleteServiceById(int serviceId) {
-		
+
 		return repository.findById(serviceId)
-			.map(service->{ 
-				repository.delete(service);
-				return ResponseEntity
-					.status(HttpStatus.OK)
-					.body(new ResponseStructure<ServiceResponseDto>()
-							.setStatusCode(HttpStatus.OK.value())
-							.setMessage("Deleted Successfully")
-							.setData(mapper.mapToServiceResponse(service))
-							);
-			})
-			.orElseThrow(()->new ServiceNotFoundException("Service not found"));
-		
+				.map(service->{ 
+					repository.delete(service);
+					return ResponseEntity
+							.status(HttpStatus.OK)
+							.body(new ResponseStructure<ServiceResponseDto>()
+									.setStatusCode(HttpStatus.OK.value())
+									.setMessage("Deleted Successfully")
+									.setData(mapper.mapToServiceResponse(service))
+									);
+				})
+				.orElseThrow(()->new ServiceNotFoundException("Service not found"));
+
 	}
 
 	@Override
 	public ResponseEntity<ResponseStructure<List<ServiceResponseDto>>> findAllServices() {
 
-			return ResponseEntity
-					.status(HttpStatus.OK)
-					.body(new ResponseStructure<List<ServiceResponseDto>>()
-							.setStatusCode(HttpStatus.OK.value())
-							.setMessage("Found Successfully")
-							.setData(repository.findAll()
-									.stream()
-									.map(service->mapper.mapToServiceResponse(service))
-									.toList())
-							);
+		return ResponseEntity
+				.status(HttpStatus.OK)
+				.body(new ResponseStructure<List<ServiceResponseDto>>()
+						.setStatusCode(HttpStatus.OK.value())
+						.setMessage("Found Successfully")
+						.setData(repository.findAll()
+								.stream()
+								.map(service->mapper.mapToServiceResponse(service))
+								.toList())
+						);
 	}
 
 }
